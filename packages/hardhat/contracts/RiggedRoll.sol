@@ -27,10 +27,11 @@ contract RiggedRoll is Ownable {
     function riggedRoll() public {
         require(address(this).balance >= 0.002 ether, "Failed to send enough value");
         bytes32 prevHash = blockhash(block.number - 1);
-        bytes32 hash = keccak256(abi.encodePacked(prevHash, address(this), diceGame.nonce));
+        bytes32 hash = keccak256(abi.encodePacked(prevHash, address(diceGame), diceGame.nonce()));
         uint256 roll = uint256(hash) % 4;
 
         console.log("THE ROLL IS ",roll);
+
 
         emit Roll(msg.sender, roll);
 
